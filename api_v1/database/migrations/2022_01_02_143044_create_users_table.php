@@ -19,6 +19,10 @@ class CreateUsersTable extends Migration
 			$table->string('password', 255)->nullable();
 			$table->string('email')->nullable();
 			$table->integer('org_id')->nullable();
+            $table->string('user_name')->nullable();
+            $table->string('mobile_num')->nullable();
+            $table->tinyInteger('status')->default(1);
+
 
         });
     }

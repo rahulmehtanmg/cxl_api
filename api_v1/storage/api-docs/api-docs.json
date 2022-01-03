@@ -32,6 +32,33 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "user_name",
+                        "in": "query",
+                        "description": "UserName",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "org_id",
+                        "in": "query",
+                        "description": "OrganizationId",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "mobile",
+                        "in": "query",
+                        "description": "Mobile",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
@@ -80,236 +107,6 @@
                         "description": "Unauthorized"
                     }
                 }
-            }
-        },
-        "/auth/v1/verify-jwt-token": {
-            "get": {
-                "tags": [
-                    "Authorization"
-                ],
-                "summary": "Verify Jwt Token",
-                "description": "Verify Jwt Token of Authenticated user",
-                "operationId": "verifyJwtToken",
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    }
-                },
-                "security": [
-                    {
-                        "JWTHeaderAuthentication": []
-                    }
-                ]
-            }
-        },
-        "/auth/v1/user-details": {
-            "get": {
-                "tags": [
-                    "Authorization"
-                ],
-                "summary": "Get User Details",
-                "description": "Provide user details of Authenticated user",
-                "operationId": "userDetails",
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    }
-                },
-                "security": [
-                    {
-                        "JWTHeaderAuthentication": []
-                    }
-                ]
-            }
-        },
-        "/auth/v1/logout": {
-            "get": {
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Logout",
-                "description": "Logout User and Token Should be Expired",
-                "operationId": "logout",
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    }
-                },
-                "security": [
-                    {
-                        "JWTHeaderAuthentication": []
-                    }
-                ]
-            }
-        },
-        "/auth/v1/refresh-token": {
-            "get": {
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Get re-fresh token",
-                "description": "Get re-fresh token",
-                "operationId": "a20275e43c9aaa39bf0a337e18fc2d5a",
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    }
-                },
-                "security": [
-                    {
-                        "JWTHeaderAuthentication": []
-                    }
-                ]
-            }
-        },
-        "/auth/v1/change-password": {
-            "post": {
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Change password",
-                "description": "Change password",
-                "operationId": "f982ee8b7ffb7b6ecf52d3a025599376",
-                "parameters": [
-                    {
-                        "name": "current_password",
-                        "in": "query",
-                        "description": "Current Password",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "new_password",
-                        "in": "query",
-                        "description": "New Password",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    }
-                },
-                "security": [
-                    {
-                        "JWTHeaderAuthentication": []
-                    }
-                ]
-            }
-        },
-        "/auth/v1/forgot-password": {
-            "post": {
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Forgot password, get OTP",
-                "description": "Forgot password, get OTP",
-                "operationId": "fd9438f087a43ef5bd5773ff0d07e96c",
-                "parameters": [
-                    {
-                        "name": "employee_number",
-                        "in": "query",
-                        "description": "Employee Number",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    }
-                },
-                "security": [
-                    {
-                        "JWTHeaderAuthentication": []
-                    }
-                ]
-            }
-        },
-        "/auth/v1/reset-password": {
-            "post": {
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Reset password using OTP",
-                "description": "Reset password using OTP",
-                "operationId": "19db3395b54cd368377756b0896609c9",
-                "parameters": [
-                    {
-                        "name": "employee_master_id",
-                        "in": "query",
-                        "description": "Employee Master ID",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "otp",
-                        "in": "query",
-                        "description": "OTP",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "description": "New Password",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "password_confirmation",
-                        "in": "query",
-                        "description": "Password Confirmation",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    }
-                },
-                "security": [
-                    {
-                        "JWTHeaderAuthentication": []
-                    }
-                ]
             }
         }
     },
