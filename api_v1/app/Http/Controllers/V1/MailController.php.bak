@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Http\Controllers\V1;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+class MailController extends Controller
+{
+public function mail() {
+$data = array(‘name’=>”Arunkumar”);
+Mail::send(‘mail’, $data, function($message) {
+$message->to(‘easyselva@gmail.com’, ‘Arunkumar’)->subject(‘Test Mail from Selva’);
+$message->from(‘rajiv.kumar@cxl.io’,’Context labs’);
+});
+echo “Email Sent. Check your inbox.”;
+}
+}
