@@ -6,9 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 
 class UserController extends Controller {
+	public function mailSend() {
+		echo 'sss';die;
+	/*$data = array(‘name’=>”Arunkumar”);
+	Mail::send(‘mail’, $data, function($message) {
+	$message->to(‘rahul.mehta@cxl.io’, ‘Arunkumar’)->subject(‘Test Mail from Selva’);
+	$message->from(‘rajiv.kumar@cxl.io’,’Context labs’);
+	});
+	echo “Email Sent. Check your inbox.”;*/
+	}
+	
 	
 	/**
 	 * @OA\Post(
@@ -82,13 +93,13 @@ class UserController extends Controller {
             $user = new User;
 			$user->org_id = $request->input('org_id');
 			$user->user_name = $request->input('user_name');
-            $user->mobile_num = $request->input('mobile');
+            $user->mobile = $request->input('mobile');
             $user->email = $request->input('email');
             $plainPassword = $request->input('password');
             $user->password = app('hash')->make($plainPassword);
 
             if($user->save()){
-				$response = $this->apiSuccess(__('mpin.OTP_verified'));
+				$response = $this->apiSuccess(__('login.register_success'));
 			}
 			else{
 				$response = $this->apiError(UNAUTHORISED, array(__(GLOBAL_REASON) => __('login.register_success')));	

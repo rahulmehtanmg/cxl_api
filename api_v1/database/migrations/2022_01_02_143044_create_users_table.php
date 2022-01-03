@@ -20,10 +20,8 @@ class CreateUsersTable extends Migration
 			$table->string('email')->nullable();
 			$table->integer('org_id')->nullable();
             $table->string('user_name')->nullable();
-            $table->string('mobile_num')->nullable();
+            $table->string('mobile')->nullable();
             $table->tinyInteger('status')->default(1);
-
-
         });
     }
 

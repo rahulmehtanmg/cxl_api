@@ -28,4 +28,5 @@ $router->group(['prefix' => 'auth/v1', 'namespace' => 'V1'], function ($router) 
 	$router->post('/mpin-login', 'MpinController@mpinLogin');
 	$router->post('/mpin-reset', 'MpinController@mpinReset');
 	$router->get('/check-update', 'ForceUpdateController@verifyVersion');
+	$router->get('/send-mail', 'MailController@mailSend');
 });

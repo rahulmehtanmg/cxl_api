@@ -35,6 +35,33 @@ class UserController extends Controller {
 	 *             type="string",
 	 *         ),
 	 *     ),
+	 *     @OA\Parameter(
+	 *         description="UserName",
+	 *         name="user_name",
+	 *         in="query",
+	 *         required=true,
+	 *         @OA\Schema(
+	 *             type="string",
+	 *         ),
+	 *     ),
+	 *     @OA\Parameter(
+	 *         description="OrganizationId",
+	 *         name="org_id",
+	 *         in="query",
+	 *         required=true,
+	 *         @OA\Schema(
+	 *             type="integer",
+	 *         ),
+	 *     ),
+	 *     @OA\Parameter(
+	 *         description="Mobile",
+	 *         name="mobile",
+	 *         in="query",
+	 *         required=true,
+	 *         @OA\Schema(
+	 *             type="string",
+	 *         ),
+	 *     ),
 	 
 	 *     @OA\Response(
 	 *         response="200",
@@ -53,20 +80,25 @@ class UserController extends Controller {
         try {
 
             $user = new User;
-			
-            
+			$user->org_id = $request->input('org_id');
+			$user->user_name = $request->input('user_name');
+            $user->mobile_num = $request->input('mobile');
             $user->email = $request->input('email');
             $plainPassword = $request->input('password');
             $user->password = app('hash')->make($plainPassword);
 
-            $user->save();
+            if($user->save()){
+				$response = $this->apiSuccess(__('mpin.OTP_verified'));
+			}
+			else{
+				$response = $this->apiError(UNAUTHORISED, array(__(GLOBAL_REASON) => __('login.register_success')));	
+			}
 
-            //return successful response
-            return response()->json(['user' => $user, 'message' => 'CREATED'], 201);
+			return $response;
 
         } catch (\Exception $e) {
             //return error message
-            //return response()->json(['message' => 'User Registration Failed!'], 409);
+			return $this->apiError(API_ERROR, $e->getmessage());
         }
 
     }
@@ -137,11 +169,32 @@ class UserController extends Controller {
         $credentials = $request->only(['email', 'password']);
 
         if (! $token = Auth::attempt($credentials)) {
-			return response()->json(['message' => 'Unauthorized'], 401);
+			$response = $this->apiError(UNAUTHORISED, array(__(GLOBAL_REASON) => __('login.invalid')));
         }
-
-        return $this->respondWithToken($token);
+		else{
+		$user = Auth::user();
+		$response = $this->respondWithToken($token,$user);
+		}
+        return $response;
     }
+
+
+	/**
+	 * Get the token array structure.
+	 *
+	 * @param  string $token
+	 *
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+
+	protected function respondWithToken($token, $user) {
+		$data = array();
+		$data['access_token'] = $token;
+		$data['token_type'] = 'bearer';
+		$data['expires_in'] = Auth::factory()->getTTL() * 60;
+		$data['id'] = $user['id']?? '';
+		return $this->apiSuccess(__('login.token'), $data);
+	}
 
 	
 
